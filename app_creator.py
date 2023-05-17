@@ -60,13 +60,13 @@ def rotate_triangle(vertices, angle, center):
         rotated_vertices.append((rotated_x, rotated_y))
     return rotated_vertices
 
-min_triangle_size = 20
-max_triangle_size = 100
-resolution = (800, 600)
+min_triangle_size = 50
+max_triangle_size = 150
+resolution = (1920, 1080)
 background_color = (255, 255, 255)
-start_color = (255, 0, 0)
-end_color = (0, 0, 255)
-num_triangles = random.randint(50, 100)
+start_color = (255, 10, 10)
+end_color = (10, 10, 255)
+num_triangles = random.randint(80, 160)
 
 texture = generate_texture(min_triangle_size, max_triangle_size, resolution, background_color, start_color, end_color)
 texture.save('generated_texture.png')

@@ -1,3 +1,4 @@
+![](.gitcontent/app_title_text.png)
 # TEXTURE CREATER
 
 ## Описание
