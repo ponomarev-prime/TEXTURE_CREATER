@@ -57,13 +57,13 @@ def rotate_triangle(triangle, angle, center):
     return np.array(rotated_triangle, np.int32)
 
 # Параметры текстуры
-min_triangle_size = 120
-max_triangle_size = 180
-resolution = (1920, 1080)
+min_triangle_size = 128
+max_triangle_size = 256
+resolution = (2560, 1440)
 background_color = (255, 255, 255)
 start_color = (255, 0, 0)
 end_color = (0, 0, 255)
-num_triangles = random.randint(80, 150)
+num_triangles = random.randint(128, 196)
 
 # Создание текстуры
 texture = generate_texture(min_triangle_size, max_triangle_size, resolution, background_color, start_color, end_color)
