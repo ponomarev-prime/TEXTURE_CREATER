@@ -3,16 +3,16 @@ import numpy as np
 import random
 import math
 
-def generate_texture(min_triangle_size, max_triangle_size, resolution, background_color, background_alfa, triangle_colors, triangle_alfa):
+def generate_texture(num_triangles, min_triangle_size, max_triangle_size, resolution, background_color, background_alfa, triangle_colors, triangle_alfa):
     image = np.zeros((resolution[1], resolution[0], 4), dtype=np.uint8)
     
-    image[:, :, 0:3] = background_color[::-1] # Фон
+    image[:, :, 0:3] = background_color[::-1] # Фон (R, G, B) > (B, G, R)
     image[:, :, 3] = background_alfa  # Установка альфа-канала 
     
     for _ in range(num_triangles):
         triangle_size = random.randint(min_triangle_size, max_triangle_size)
         
-        triangle_color = convert_rgb_to_bgr(random.choice(triangle_colors))
+        triangle_color = random.choice(triangle_colors)[::-1]
         
         x, y, w, h, angle = generate_triangle_properties(resolution, triangle_size)
 
@@ -28,11 +28,6 @@ def generate_texture(min_triangle_size, max_triangle_size, resolution, backgroun
         cv2.fillPoly(image, [rotated_triangle], triangle_color, lineType=cv2.LINE_AA)
 
     return image
-
-# (R, G, B) > (B, G, R)
-def convert_rgb_to_bgr(rgb_color):
-    bgr_color = (rgb_color[2], rgb_color[1], rgb_color[0])
-    return bgr_color
 
 def generate_triangle_properties(resolution, triangle_size):
     x_range = resolution[0] - triangle_size
@@ -64,6 +59,8 @@ def rotate_triangle(triangle, angle, center):
 # Размер треугольников
 min_triangle_size = 128
 max_triangle_size = 256
+# Коэффициент разрешения (размер треугольников)
+scale_factor = 100
 # Колличество треугольников
 num_triangles = random.randint(128, 196)
 # Разрешение
@@ -75,9 +72,10 @@ background_alfa = 255
 triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)]
 triangle_alfa = 255
 
+
+scale_var = scale_factor/100
 # Создание текстуры
-texture = generate_texture(min_triangle_size, max_triangle_size, resolution, background_color, background_alfa, triangle_colors, triangle_alfa)
+texture = generate_texture(num_triangles, min_triangle_size*scale_var, max_triangle_size*scale_var, resolution, background_color, background_alfa, triangle_colors, triangle_alfa)
 
 # Сохранение текстуры в файл
-cv2.imwrite('generated_texture.png', texture)
-
+cv2.imwrite('texture_general.png', texture)
