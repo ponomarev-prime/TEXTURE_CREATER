@@ -18,7 +18,7 @@ def generate_texture(min_triangle_size, max_triangle_size, resolution, backgroun
         rotated_triangle = rotate_triangle(triangle, angle, (x + w/2, y + h/2))
         
         # Заполнение треугольника сглаженным цветом
-        cv2.fillPoly(image, [rotated_triangle], triangle_color)
+        cv2.fillPoly(image, [rotated_triangle], triangle_color, lineType=cv2.LINE_AA)
     
     return image
 
