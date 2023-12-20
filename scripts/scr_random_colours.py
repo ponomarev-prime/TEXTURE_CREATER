@@ -38,9 +38,8 @@ background_color = (2, 1, 1)
 generated_colors = generate_unique_colors(4, background_color)
 
 print("Сгенерированные уникальные цвета:")
-for color in generated_colors:
-    print(color)
-
-print("---")
+#for color in generated_colors:
+#    print(color)
+# print("---")
 
 print(generated_colors)
