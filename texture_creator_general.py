@@ -110,7 +110,7 @@ def generate_unique_colors(num_colors, background_color, min_distance=50):
 
 def create_triangle_texture_image():
     # имя файла
-    file_name = 'texture_general.png'
+    file_name = 'result_images/texture_general.png'
 
     # Параметры треугольников
     min_triangle_size = 128

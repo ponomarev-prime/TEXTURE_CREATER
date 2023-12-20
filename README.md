@@ -18,38 +18,40 @@ Just4Fun!
 
 `app_creator_general.py` - random без контороля
 
-![](texture_general.png)
+![](result_images/texture_general.png)
 
 `app_creator_uniformity_mesh.py` - разбиение изображения на сетку
 
-![](texture_uniformity_mesh.png)
+![](result_images/texture_uniformity_mesh.png)
 
 `app_creator_step-by-step_placement.py` - пошаговое размещение
 
-![](texture_step-by-step_placement.png)
+![](result_images/texture_step-by-step_placement.png)
 
 `app_creator_monte-carlo_method.py` - метод Монте-Карло (-ещё не доделал-)
 
-![](texture_monte-carlo_method.png)
-
-## Tree 
-
-```
-.
-├── app_creator_general.py
-├── app_creator_monte-carlo_method.py
-├── app_creator_step-by-step_placement.py
-├── app_creator_uniformity_mesh.py
-├── _draft.md
-├── README.md
-├── requirements.txt
-├── test_ex.py
-├── texture_general.png
-├── texture_monte-carlo_method.png
-├── texture_step-by-step_placement.png
-└── texture_uniformity_mesh.png
-```
+![](result_images/texture_monte-carlo_method.png)
 
 ## Some more
 
-triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)] # Orange-Brown frome CoD
+triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)] # Orange-Brown from CoD
+
+# texture_creator_general.py
+
+Этот скрипт на языке Python создает текстуру, состоящую из случайно расположенных и повернутых треугольников различного размера и цвета. 
+
+Краткое описание функций и параметров:
+
+1. **generate_texture**: Функция создает изображение текстуры, заполняя его случайными треугольниками. Принимает параметры, такие как количество треугольников, размер треугольников, разрешение текстуры, цвет фона, альфа-каналы и цвета треугольников.
+
+2. **generate_triangle_properties**: Генерирует случайные свойства треугольника, такие как координаты (x, y), ширина, высота и угол поворота.
+
+3. **rotate_triangle**: Поворачивает треугольник вокруг заданного центра на заданный угол.
+
+4. **calculate_scale_factor**: Рассчитывает масштабный коэффициент на основе разрешения.
+
+5. **generate_unique_colors**: Генерирует уникальные цвета для треугольников, не слишком близкие к цвету фона.
+
+6. **create_triangle_texture_image**: Основная функция, которая задает параметры текстуры, вызывает функции для ее создания и сохраняет в файл.
+
+При запуске скрипта создается текстурное изображение с именем 'result_images/texture_general.png'.
