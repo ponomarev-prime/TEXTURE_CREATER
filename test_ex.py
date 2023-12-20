@@ -1,26 +1,46 @@
-colour =  (224, 93, 40)
-alfa = 128
+import random
 
-color_with_alpha = (224, 93, 40) + (alfa,)
+def generate_unique_colors(num_colors, background_color, min_distance=50):
+    """
+    Генерирует уникальные цвета, не повторяющиеся и не слишком близкие к фоновому цвету.
 
-invert_colour = colour[::-1]
+    :param num_colors: Количество цветов для генерации.
+    :param background_color: Фоновый цвет в формате (R, G, B).
+    :param min_distance: Минимальное расстояние между созданными цветами.
+    :return: Список уникальных цветов в формате [(R, G, B), ...].
+    """
+    colors = []
 
-print(colour)
-print('')
-print(color_with_alpha)
-print('')
-print(invert_colour)
+    def calculate_color_distance(color1, color2):
+        return sum((a - b) ** 2 for a, b in zip(color1, color2)) ** 0.5
 
-def calculate_scale_factor(resolution, base_resolution):
-    scale_factor = resolution[0] / base_resolution[0]
-    return scale_factor
+    def is_color_too_close(new_color, existing_colors):
+        for color in existing_colors:
+            if calculate_color_distance(new_color, color) < min_distance:
+                return True
+        return False
+
+    for _ in range(num_colors):
+        while True:
+            new_color = (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255)
+            )
+            if not is_color_too_close(new_color, colors) and calculate_color_distance(new_color, background_color) >= min_distance:
+                colors.append(new_color)
+                break
+
+    return colors
 
 # Пример использования
-resolution = (2560, 1440)  # Разрешение текущего изображения
-base_resolution = (1920, 1080)  # Базовое разрешение
+background_color = (2, 1, 1)
+generated_colors = generate_unique_colors(4, background_color)
 
-scale_factor = calculate_scale_factor(resolution, base_resolution)
-print(scale_factor)
+print("Сгенерированные уникальные цвета:")
+for color in generated_colors:
+    print(color)
 
-scale_var = scale_factor*100
-print(scale_var)
+print("---")
+
+print(generated_colors)

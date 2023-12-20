@@ -22,7 +22,6 @@ def generate_texture(num_triangles, min_triangle_size, max_triangle_size, resolu
         
         # Alfa
         triangle_color = triangle_color + (triangle_alfa,)
-        print(triangle_color)
         
         # Заполнение треугольника сглаженным цветом. Функция cv2.fillPoly() ожидает цвет в формате (B, G, R) или (B, G, R, A)
         cv2.fillPoly(image, [rotated_triangle], triangle_color, lineType=cv2.LINE_AA)
@@ -55,27 +54,89 @@ def rotate_triangle(triangle, angle, center):
         rotated_triangle.append((rotated_x, rotated_y))
     return np.array(rotated_triangle, np.int32)
 
-# Параметры текстуры
-# Размер треугольников
-min_triangle_size = 128
-max_triangle_size = 256
-# Коэффициент разрешения (размер треугольников)
-scale_factor = 100
-# Колличество треугольников
-num_triangles = random.randint(128, 196)
-# Разрешение
-resolution = (2560, 1440)
-# Фон (R, G, B)
-background_color = (2, 1, 1)
-background_alfa = 255
-# Цвета (R, G, B)
-triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)]
-triangle_alfa = 255
+def calculate_scale_factor(resolution, base_resolution=(1920, 1080), base_scale_factor=100):
+    """
+    Рассчитывает масштабирующий коэффициент (scale_factor) на основе разрешения.
+
+    :param resolution: Кортеж, представляющий разрешение в формате (ширина, высота).
+    :param base_resolution: Базовое разрешение, для которого установлен базовый масштабный коэффициент.
+    :param base_scale_factor: Базовый масштабный коэффициент, соответствующий базовому разрешению.
+    :return: Вычисленный масштабирующий коэффициент.
+    """
+    base_width, base_height = base_resolution
+    width, height = resolution
+
+    # Вычисление среднего значения разрешения
+    average_resolution = (width + height) / 2
+
+    # Вычисление масштабного коэффициента
+    scale_factor = base_scale_factor * (average_resolution / ((base_width + base_height) / 2))
+
+    return scale_factor
+
+def generate_unique_colors(num_colors, background_color, min_distance=50):
+    """
+    Генерирует уникальные цвета, не повторяющиеся и не слишком близкие к фоновому цвету.
+
+    :param num_colors: Количество цветов для генерации.
+    :param background_color: Фоновый цвет в формате (R, G, B).
+    :param min_distance: Минимальное расстояние между созданными цветами.
+    :return: Список уникальных цветов в формате [(R, G, B), ...].
+    """
+    colors = []
+
+    def calculate_color_distance(color1, color2):
+        return sum((a - b) ** 2 for a, b in zip(color1, color2)) ** 0.5
+
+    def is_color_too_close(new_color, existing_colors):
+        for color in existing_colors:
+            if calculate_color_distance(new_color, color) < min_distance:
+                return True
+        return False
+
+    for _ in range(num_colors):
+        while True:
+            new_color = (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255)
+            )
+            if not is_color_too_close(new_color, colors) and calculate_color_distance(new_color, background_color) >= min_distance:
+                colors.append(new_color)
+                break
+
+    return colors
 
 
-scale_var = scale_factor/100
-# Создание текстуры
-texture = generate_texture(num_triangles, min_triangle_size*scale_var, max_triangle_size*scale_var, resolution, background_color, background_alfa, triangle_colors, triangle_alfa)
+def create_triangle_texture_image():
+    # имя файла
+    file_name = 'texture_general.png'
 
-# Сохранение текстуры в файл
-cv2.imwrite('texture_general.png', texture)
+    # Параметры треугольников
+    min_triangle_size = 128
+    max_triangle_size = 256
+    num_triangles = random.randint(128, 196)
+
+    # Параметры текстуры
+    resolution = (2560, 1440)
+    background_color = (2, 1, 1)
+
+    # Альфа-канал
+    background_alfa = 255
+    triangle_alfa = 255
+
+    triangle_colors = generate_unique_colors(4, background_color) # [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)]
+
+    # Масштабирование треугольников
+    scale_factor = calculate_scale_factor(resolution)
+    scale_var = scale_factor / 100
+
+    # Создание текстуры
+    texture = generate_texture(num_triangles, int(min_triangle_size * scale_var), int(max_triangle_size * scale_var),
+                                resolution, background_color, background_alfa, triangle_colors, triangle_alfa)
+
+    # Сохранение текстуры в файл
+    cv2.imwrite(file_name, texture)
+
+if __name__ == "__main__":
+    create_triangle_texture_image()
