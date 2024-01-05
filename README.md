@@ -16,7 +16,7 @@ Just4Fun!
 
 ### Реализация
 
-`app_creator_general.py` - random без контороля
+`texture_creator_general.py` - random без контороля
 
 ![](result_images/texture_general.png)
 
@@ -55,3 +55,10 @@ triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)] # O
 6. **create_triangle_texture_image**: Основная функция, которая задает параметры текстуры, вызывает функции для ее создания и сохраняет в файл.
 
 При запуске скрипта создается текстурное изображение с именем 'result_images/texture_general.png'.
+
+
+# Вдохновленно Call of Duty: MW (2019)
+
+![](.gitcontent/cod_img1.png)
+
+![](.gitcontent/cod_img2.png)
