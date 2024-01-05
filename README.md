@@ -62,3 +62,5 @@ triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)] # O
 ![](.gitcontent/cod_img1.png)
 
 ![](.gitcontent/cod_img2.png)
+
+![](.gitcontent/cod_img3.png)
