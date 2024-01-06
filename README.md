@@ -64,3 +64,28 @@ triangle_colors = [(224, 93, 40), (122, 85, 58), (68, 49, 42), (92, 65, 57)] # O
 ![](.gitcontent/cod_img2.png)
 
 ![](.gitcontent/cod_img3.png)
+
+# Как запустить
+
+На Windows:
+
+1. Запускаем PowerShell
+
+2. Переходим в директорию проекта 
+```
+cd .\[path]\TEXTURE_CREATER\
+```
+3. Собираем venv
+```
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+```
+4. Запускаем скрипт
+```
+python texture_creator_general.py
+```
+
+На Linux:
+
+Если у тебя Линукс, то и скрипт запустить ты сможешь сам.
